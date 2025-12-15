@@ -1,0 +1,170 @@
+{
+  "_description": "HTTP Request Node Configuration Examples",
+  "_nodeType": "n8n-nodes-base.httpRequest",
+  "_typeVersion": 4.2,
+
+  "examples": {
+    "basic_get": {
+      "description": "Simple GET request",
+      "parameters": {
+        "url": "https://api.example.com/data",
+        "method": "GET",
+        "options": {}
+      }
+    },
+
+    "get_with_query_params": {
+      "description": "GET with query parameters",
+      "parameters": {
+        "url": "https://api.example.com/search",
+        "method": "GET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "q", "value": "={{ $json.searchTerm }}"},
+            {"name": "limit", "value": "100"},
+            {"name": "offset", "value": "={{ $json.page * 100 }}"}
+          ]
+        },
+        "options": {}
+      }
+    },
+
+    "post_json": {
+      "description": "POST with JSON body",
+      "parameters": {
+        "url": "https://api.example.com/items",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ name: $json.name, value: $json.value }) }}",
+        "options": {}
+      }
+    },
+
+    "post_form_data": {
+      "description": "POST with form data",
+      "parameters": {
+        "url": "https://api.example.com/submit",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {"name": "field1", "value": "={{ $json.field1 }}"},
+            {"name": "field2", "value": "static_value"}
+          ]
+        },
+        "options": {}
+      }
+    },
+
+    "with_authentication": {
+      "description": "Request with API key authentication",
+      "parameters": {
+        "url": "https://api.example.com/protected",
+        "method": "GET",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "options": {}
+      }
+    },
+
+    "with_custom_headers": {
+      "description": "Request with custom headers",
+      "parameters": {
+        "url": "https://api.example.com/data",
+        "method": "GET",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "X-API-Key", "value": "={{ $env.API_KEY }}"},
+            {"name": "Accept", "value": "application/json"},
+            {"name": "X-Request-ID", "value": "={{ $execution.id }}"}
+          ]
+        },
+        "options": {}
+      }
+    },
+
+    "with_timeout_and_retry": {
+      "description": "Request with timeout and retry options",
+      "parameters": {
+        "url": "https://api.example.com/slow-endpoint",
+        "method": "GET",
+        "options": {
+          "timeout": 60000,
+          "retry": {
+            "enabled": true,
+            "maxTries": 3
+          }
+        }
+      }
+    },
+
+    "with_full_response": {
+      "description": "Get full response including headers and status",
+      "parameters": {
+        "url": "https://api.example.com/data",
+        "method": "GET",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      }
+    },
+
+    "with_error_handling": {
+      "description": "Request that continues on error",
+      "parameters": {
+        "url": "https://api.example.com/might-fail",
+        "method": "GET",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+
+    "put_update": {
+      "description": "PUT request to update resource",
+      "parameters": {
+        "url": "https://api.example.com/items/{{ $json.id }}",
+        "method": "PUT",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.updateData) }}",
+        "options": {}
+      }
+    },
+
+    "delete_request": {
+      "description": "DELETE request",
+      "parameters": {
+        "url": "https://api.example.com/items/{{ $json.id }}",
+        "method": "DELETE",
+        "options": {}
+      }
+    }
+  },
+
+  "template": {
+    "id": "http-request-1",
+    "name": "HTTP Request",
+    "type": "n8n-nodes-base.httpRequest",
+    "typeVersion": 4.2,
+    "position": [450, 300],
+    "parameters": {
+      "url": "",
+      "method": "GET",
+      "options": {}
+    }
+  }
+}

@@ -1,0 +1,318 @@
+{
+  "_description": "IF Node Configuration Examples",
+  "_nodeType": "n8n-nodes-base.if",
+  "_typeVersion": 2,
+
+  "examples": {
+    "string_equals": {
+      "description": "Check if string equals value",
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "active",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+
+    "string_contains": {
+      "description": "Check if string contains substring",
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "@company.com",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    "number_comparison": {
+      "description": "Compare numbers (greater than)",
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.amount }}",
+              "rightValue": "100",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    "number_range": {
+      "description": "Check if number is in range",
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.age }}",
+              "rightValue": "18",
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "leftValue": "={{ $json.age }}",
+              "rightValue": "65",
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+
+    "boolean_check": {
+      "description": "Check boolean value",
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.isActive }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    "empty_check": {
+      "description": "Check if value is not empty",
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    "array_contains": {
+      "description": "Check if array contains value",
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.tags }}",
+              "rightValue": "important",
+              "operator": {
+                "type": "array",
+                "operation": "contains"
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    "regex_match": {
+      "description": "Match against regex pattern",
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    "multiple_conditions_and": {
+      "description": "Multiple conditions with AND",
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "active",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "leftValue": "={{ $json.amount }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "leftValue": "={{ $json.verified }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+
+    "multiple_conditions_or": {
+      "description": "Multiple conditions with OR",
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.priority }}",
+              "rightValue": "high",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "leftValue": "={{ $json.priority }}",
+              "rightValue": "critical",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        }
+      }
+    },
+
+    "null_check": {
+      "description": "Check if value exists (not null/undefined)",
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.optionalField }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+
+  "operators_reference": {
+    "string": [
+      "equals - Exact match",
+      "notEquals - Not equal",
+      "contains - Contains substring",
+      "notContains - Does not contain",
+      "startsWith - Starts with",
+      "endsWith - Ends with",
+      "isEmpty - Is empty string",
+      "isNotEmpty - Is not empty",
+      "regex - Matches regex pattern",
+      "exists - Is not null/undefined"
+    ],
+    "number": [
+      "equals - Equal to",
+      "notEquals - Not equal to",
+      "gt - Greater than",
+      "gte - Greater than or equal",
+      "lt - Less than",
+      "lte - Less than or equal",
+      "isEmpty - Is null/undefined",
+      "isNotEmpty - Has value"
+    ],
+    "boolean": [
+      "true - Is true",
+      "false - Is false"
+    ],
+    "array": [
+      "contains - Array contains value",
+      "notContains - Array does not contain",
+      "lengthEquals - Array length equals",
+      "lengthGt - Array length greater than",
+      "lengthLt - Array length less than",
+      "isEmpty - Array is empty",
+      "isNotEmpty - Array has items"
+    ]
+  },
+
+  "template": {
+    "id": "if-1",
+    "name": "IF",
+    "type": "n8n-nodes-base.if",
+    "typeVersion": 2,
+    "position": [450, 300],
+    "parameters": {
+      "conditions": {
+        "options": {
+          "caseSensitive": true,
+          "typeValidation": "strict"
+        },
+        "conditions": [
+          {
+            "leftValue": "={{ $json.field }}",
+            "rightValue": "value",
+            "operator": {
+              "type": "string",
+              "operation": "equals"
+            }
+          }
+        ],
+        "combinator": "and"
+      }
+    }
+  },
+
+  "output_info": {
+    "main[0]": "True branch - condition matched",
+    "main[1]": "False branch - condition not matched"
+  }
+}
